@@ -1,0 +1,196 @@
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: 100px;
+}
+
+/* Header */
+header {
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #00f7ff;
+}
+
+#filters button {
+  background: transparent;
+  border: 1px solid #00f7ff;
+  color: #00f7ff;
+  margin-right: 0.5rem;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#filters button:hover {
+  background-color: #00f7ff;
+  color: #000;
+}
+
+/* Live Notification Banner */
+#live-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  color: #00f7ff;
+  font-weight: 500;
+  box-shadow: 0 0 10px rgba(0, 247, 255, 0.4);
+  border: 1px solid rgba(0, 247, 255, 0.2);
+  width: fit-content;
+  margin: 1rem auto;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#live-banner button {
+  background: #00f7ff;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+#live-banner button:hover {
+  background: #fff;
+  color: #00f7ff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Posts Grid */
+#posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+/* Post Card */
+.post {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 1.2rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.post:hover {
+  transform: translateY(-5px);
+  border-color: #00f7ff;
+}
+
+.post h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.post h3 a {
+  color: #00f7ff;
+  text-decoration: none;
+}
+
+.post p {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #ccc;
+}
+
+.post button {
+  padding: 6px 12px;
+  background: #00f7ff;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.post button:hover {
+  background: #fff;
+  color: #00f7ff;
+}
+
+/* Comments */
+.comments {
+  margin-top: 1rem;
+}
+
+.comment {
+  margin-top: 1rem;
+  padding-left: 1rem;
+  border-left: 2px dashed #00f7ff;
+  color: #e0e0e0;
+  font-size: 0.85rem;
+}
+
+.comment strong {
+  color: #fff;
+}
+
+/* Load More Button */
+#loadMore {
+  display: block;
+  margin: 2rem auto;
+  padding: 12px 24px;
+  background: #00f7ff;
+  color: #000;
+  border: none;
+  font-size: 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#loadMore:hover {
+  background: #fff;
+  color: #00f7ff;
+}
+
+/* Scrollbar Custom */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #00f7ff;
+  border-radius: 4px;
+}

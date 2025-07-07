@@ -1,0 +1,281 @@
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: 100px;
+}
+
+/* Header */
+header {
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #00f7ff;
+}
+
+#filters {
+  margin-bottom: 1rem;
+}
+
+#filters button {
+  background: transparent;
+  border: 1px solid #00f7ff;
+  color: #00f7ff;
+  margin-right: 0.5rem;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#filters button:hover,
+#filters button.active {
+  background-color: #00f7ff;
+  color: #000;
+}
+
+/* Live Notification Banner */
+#live-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  color: #00f7ff;
+  font-weight: 500;
+  box-shadow: 0 0 10px rgba(0, 247, 255, 0.4);
+  border: 1px solid rgba(0, 247, 255, 0.2);
+  width: fit-content;
+  margin: 1rem auto;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#live-banner button {
+  background: #00f7ff;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+#live-banner button:hover {
+  background: #fff;
+  color: #00f7ff;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Posts Grid */
+#posts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  align-items: start;
+}
+
+/* Post Card */
+.post {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 1.2rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+}
+
+.post:hover {
+  transform: translateY(-5px);
+  border-color: #00f7ff;
+}
+
+.post h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.post h3 a {
+  color: #00f7ff;
+  text-decoration: none;
+}
+
+.post p {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #ccc;
+}
+
+/* Updated button style for view comments */
+.post button {
+  background: transparent;
+  border: none;
+  color: #00f7ff;
+  padding: 0;
+  margin-top: auto;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: underline;
+  align-self: flex-start;
+  transition: color 0.2s ease;
+}
+
+.post button:hover {
+  color: #80f0ff;
+}
+
+/* Single post view */
+#post-view {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto 3rem;
+}
+
+#post-details h2 a {
+  color: #00f7ff;
+  text-decoration: none;
+}
+
+#post-details p {
+  color: #ccc;
+  margin: 0.5rem 0 1.5rem;
+  font-size: 1rem;
+}
+
+/* Comments */
+#post-comments {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 1rem 1.5rem;
+  max-height: 600px;
+  overflow-y: auto;
+  box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
+  border: 1px solid rgba(0, 247, 255, 0.3);
+}
+
+.comment {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #e0e0e0;
+  padding-left: 10px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.comment strong {
+  color: #fff;
+}
+
+/* Back Button */
+#backBtn {
+  background: transparent;
+  border: 1px solid #00f7ff;
+  color: #00f7ff;
+  padding: 8px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+#backBtn:hover {
+  background-color: #00f7ff;
+  color: #000;
+}
+
+/* Load More Button */
+#loadMore {
+  display: block;
+  margin: 2rem auto;
+  padding: 12px 24px;
+  background: #00f7ff;
+  color: #000;
+  border: none;
+  font-size: 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#loadMore:hover {
+  background: #fff;
+  color: #00f7ff;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  .post {
+    padding: 1rem;
+  }
+
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  #filters button {
+    flex: 1 1 auto;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  #live-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  #post-view {
+    padding: 1rem;
+  }
+
+  #post-comments {
+    max-height: 400px;
+  }
+}

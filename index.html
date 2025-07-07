@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Creative HackerNews UI</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>HackerNews</h1>
+    <div id="filters">
+      <button data-type="newstories" class="active">Stories</button>
+      <button data-type="jobs">Jobs</button>
+      <button data-type="polls">Polls</button>
+    </div>
+  </header>
+
+  <div id="live-banner" class="hidden">
+    New posts available! <button id="refreshBtn">Refresh</button>
+  </div>
+
+  <section id="feed-view">
+    <div id="posts"></div>
+    <button id="loadMore">Load More</button>
+  </section>
+
+  <section id="post-view" style="display:none;">
+    <button id="backBtn">← Back to Feed</button>
+    <div id="post-details"></div>
+    <div id="post-comments"></div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
