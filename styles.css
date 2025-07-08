@@ -281,7 +281,7 @@ h1 {
 }
 /* Add to styles.css */
 .post-text {
-  background-color: #f8f8f8;
+  background-color: #9e0909;
   padding: 10px;
   border-radius: 4px;
   margin: 10px 0;
@@ -307,6 +307,7 @@ h1 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: background 0.2s ease;
   position: relative;
+  color: #222;
 }
 
 .poll-options li:hover {
