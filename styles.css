@@ -279,3 +279,46 @@ h1 {
     max-height: 400px;
   }
 }
+/* Add to styles.css */
+.post-text {
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+  border-left: 3px solid #ff6600;
+}
+
+.poll-options {
+  list-style: none;
+  padding: 0;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.poll-options li {
+  background: #fefefe;
+  border-left: 4px solid #4a90e2;
+  padding: 12px 16px;
+  font-weight: 500;
+  font-size: 15px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: background 0.2s ease;
+  position: relative;
+}
+
+.poll-options li:hover {
+  background: #f0f8ff;
+}
+
+.poll-options li::after {
+  content: attr(data-votes) \" votes\";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: #666;
+}
