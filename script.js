@@ -15,7 +15,6 @@ let currentType = 'newstories';
 let currentPostIds = [];
 let currentIndex = 0;
 const postsPerPage = 10;
-let lastMaxItem = null;
 let liveCheckInterval = null;
 
 // Initialize
@@ -82,7 +81,6 @@ async function loadPosts(type) {
   currentPostIds.sort((a, b) => b - a);
   displayPosts();
 
-  lastMaxItem = currentPostIds[0];
   if (liveCheckInterval) clearInterval(liveCheckInterval);
   liveCheckInterval = setInterval(checkForLiveUpdates, 5000);
 }
@@ -215,16 +213,30 @@ async function fetchItem(id) {
   }
 }
 
-// Live update check
+// Fixed live update check
 async function checkForLiveUpdates() {
-  if (!lastMaxItem) return;
   try {
-    const maxItem = await fetch(`https://hacker-news.firebaseio.com/v0/maxitem.json`).then(r => r.json());
-    if (maxItem > lastMaxItem) {
+    let newTopId;
+    
+    if (currentType === 'polls') {
+      const res = await fetch(`https://hn.algolia.com/api/v1/search_by_date?tags=poll&hitsPerPage=1`);
+      const data = await res.json();
+      if (data.hits.length > 0) {
+        newTopId = parseInt(data.hits[0].objectID);
+      }
+    } else {
+      const type = currentType === 'jobs' ? 'jobstories' : currentType;
+      const ids = await fetchIds(type);
+      if (ids.length > 0) {
+        newTopId = ids[0];
+      }
+    }
+
+    // Compare with current top post ID
+    if (newTopId && currentPostIds.length > 0 && newTopId > currentPostIds[0]) {
       liveBanner.classList.remove('hidden');
-      lastMaxItem = maxItem;
     }
   } catch {
-    // ignore
+    // ignore errors
   }
 }
