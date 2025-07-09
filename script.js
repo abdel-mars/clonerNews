@@ -1,5 +1,4 @@
 const postsContainer = document.getElementById('posts');
-const loadMoreBtn = document.getElementById('loadMore');
 const filters = document.querySelectorAll('#filters button');
 const liveBanner = document.getElementById('live-banner');
 const refreshBtn = document.getElementById('refreshBtn');
@@ -46,11 +45,28 @@ refreshBtn.addEventListener('click', () => {
   loadPosts(currentType);
   liveBanner.classList.add('hidden');
 });
-
-// Load more button
-loadMoreBtn.addEventListener('click', () => {
-  displayPosts();
-});
+// throtle 
+const throttle = (callback, delay = 0) => {
+  let khdama = false
+  return (...args) => {
+    if (!khdama) {
+      callback(...args)
+      khdama = true
+      let t = setTimeout(() => {
+        clearTimeout(t)
+        khdama = false
+      }, delay)
+    }
+  }
+}
+// Load more data
+window.addEventListener("scroll", throttle(() => {
+  if (
+    window.innerHeight + window.scrollY >= document.body.offsetHeight - 100
+  ) {
+    displayPosts();
+  }
+}, 1000));
 
 // UI helpers
 function setActiveFilterButton(type) {
@@ -94,14 +110,13 @@ async function displayPosts() {
       item.deleted ||
       item.dead ||
       (!item.title && !item.text && !item.url)
-    ) continue; 
+    ) continue;
 
     const postEl = createPostElement(item);
     postsContainer.appendChild(postEl);
   }
 
   currentIndex += postsPerPage;
-  loadMoreBtn.style.display = currentIndex >= currentPostIds.length ? 'none' : 'block';
 }
 
 // Post element
@@ -110,9 +125,15 @@ function createPostElement(item) {
   postElement.classList.add('post');
 
   const title = document.createElement('h3');
-  title.innerHTML = item.title
-    ? `<a href="${item.url || '#'}" target="_blank" rel="noopener noreferrer">${item.title}</a>`
-    : '(no title)';
+  title.innerHTML = `
+  ${item.title
+      ? `<a href="${item.url || '#'}" target="_blank" rel="noopener noreferrer">${item.title}</a>`
+      : '(no title)'}
+  <p><strong>By:</strong> ${item.by || "Unknown"}</p>
+  <p><strong>Type:</strong> ${item.type}</p>
+  <p><strong>Time:</strong> ${new Date(item.time * 1000).toLocaleString()}</p>
+`;
+
   postElement.appendChild(title);
 
   const meta = document.createElement('p');
@@ -215,7 +236,7 @@ async function fetchItem(id) {
 async function checkForLiveUpdates() {
   try {
     let newTopId;
-    
+
     if (currentType === 'polls') {
       const res = await fetch(`https://hn.algolia.com/api/v1/search_by_date?tags=poll&hitsPerPage=1`);
       const data = await res.json();

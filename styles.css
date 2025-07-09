@@ -18,7 +18,7 @@ header {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -91,30 +91,36 @@ h1 {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 #posts {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-  align-items: start;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
 }
 
 /* Post Card */
 .post {
+  margin: 10px 100px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
   padding: 1.2rem;
   backdrop-filter: blur(8px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-  transition: transform 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-self: start;
+  width: 55%;
+  height: 300px;
 }
 
 .post:hover {
@@ -241,6 +247,7 @@ h1 {
   }
 
   .post {
+    width: 100%;
     padding: 1rem;
   }
 
@@ -258,6 +265,7 @@ h1 {
   }
 
   #live-banner {
+    z-index: 12;
     flex-direction: column;
     text-align: center;
     gap: 0.5rem;
@@ -272,6 +280,7 @@ h1 {
     max-height: 400px;
   }
 }
+
 .post-text {
   background-color: #9e0909;
   padding: 10px;
