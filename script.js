@@ -62,7 +62,7 @@ const throttle = (callback, delay = 0) => {
 // Load more data
 window.addEventListener("scroll", throttle(() => {
   if (
-    window.innerHeight + window.scrollY >= document.body.offsetHeight - 100
+    window.innerHeight + window.scrollY >= document.body.offsetHeight - 400
   ) {
     displayPosts();
   }
@@ -217,8 +217,8 @@ async function fetchIds(type) {
   try {
     const res = await fetch(`https://hacker-news.firebaseio.com/v0/${type}.json`);
     return await res.json();
-  } catch {
-    return [];
+  } catch (error) {
+    console.error("Error :", error);
   }
 }
 
@@ -227,8 +227,8 @@ async function fetchItem(id) {
   try {
     const res = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
     return await res.json();
-  } catch {
-    return null;
+  } catch (error) {
+    console.error("Error :", error);
   }
 }
 
@@ -255,7 +255,7 @@ async function checkForLiveUpdates() {
     if (newTopId && currentPostIds.length > 0 && newTopId > currentPostIds[0]) {
       liveBanner.classList.remove('hidden');
     }
-  } catch {
-    // ignore errors
+  } catch (error) {
+    console.error("Error :", error);
   }
 }
