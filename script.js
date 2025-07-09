@@ -1,4 +1,3 @@
-// DOM Elements
 const postsContainer = document.getElementById('posts');
 const loadMoreBtn = document.getElementById('loadMore');
 const filters = document.querySelectorAll('#filters button');
@@ -10,14 +9,13 @@ const postDetails = document.getElementById('post-details');
 const postComments = document.getElementById('post-comments');
 const backBtn = document.getElementById('backBtn');
 
-// State variables
 let currentType = 'newstories';
 let currentPostIds = [];
 let currentIndex = 0;
 const postsPerPage = 10;
 let liveCheckInterval = null;
 
-// Initialize
+// Init
 loadPosts(currentType);
 setActiveFilterButton(currentType);
 
@@ -96,7 +94,7 @@ async function displayPosts() {
       item.deleted ||
       item.dead ||
       (!item.title && !item.text && !item.url)
-    ) continue; // Skip invalid/empty posts
+    ) continue; 
 
     const postEl = createPostElement(item);
     postsContainer.appendChild(postEl);
@@ -132,7 +130,7 @@ function createPostElement(item) {
   return postElement;
 }
 
-// Show full post + comments
+// Show full post comments
 async function showPostWithComments(postId) {
   feedView.style.display = 'none';
   postView.style.display = 'block';
