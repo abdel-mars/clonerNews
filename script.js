@@ -1,15 +1,16 @@
+// DOM Elements
 const postsContainer = document.getElementById('posts');
 const loadMoreBtn = document.getElementById('loadMore');
 const filters = document.querySelectorAll('#filters button');
 const liveBanner = document.getElementById('live-banner');
 const refreshBtn = document.getElementById('refreshBtn');
-
 const feedView = document.getElementById('feed-view');
 const postView = document.getElementById('post-view');
 const postDetails = document.getElementById('post-details');
 const postComments = document.getElementById('post-comments');
 const backBtn = document.getElementById('backBtn');
 
+// State variables
 let currentType = 'newstories';
 let currentPostIds = [];
 let currentIndex = 0;
@@ -17,9 +18,11 @@ const postsPerPage = 10;
 let lastMaxItem = null;
 let liveCheckInterval = null;
 
+// Initialize
 loadPosts(currentType);
 setActiveFilterButton(currentType);
 
+// Filter button click event
 filters.forEach(btn => {
   btn.addEventListener('click', () => {
     const type = btn.dataset.type;
@@ -31,6 +34,7 @@ filters.forEach(btn => {
   });
 });
 
+// Back button to return to feed
 backBtn.addEventListener('click', () => {
   postView.style.display = 'none';
   feedView.style.display = 'block';
@@ -39,16 +43,19 @@ backBtn.addEventListener('click', () => {
   window.location.hash = '';
 });
 
+// Refresh new posts (live)
 refreshBtn.addEventListener('click', () => {
   resetFeed();
   loadPosts(currentType);
   liveBanner.classList.add('hidden');
 });
 
+// Load more button
 loadMoreBtn.addEventListener('click', () => {
   displayPosts();
 });
 
+// UI helpers
 function setActiveFilterButton(type) {
   filters.forEach(btn => {
     btn.classList.toggle('active', btn.dataset.type === type);
@@ -62,17 +69,17 @@ function resetFeed() {
   liveBanner.classList.add('hidden');
 }
 
+// Load post IDs
 async function loadPosts(type) {
   if (type === 'polls') {
     const res = await fetch(`https://hn.algolia.com/api/v1/search_by_date?tags=poll&hitsPerPage=100`);
     const data = await res.json();
     currentPostIds = data.hits.map(hit => parseInt(hit.objectID));
-  } else if (type === 'jobs') {
-    currentPostIds = await fetchIds('jobstories');
   } else {
-    currentPostIds = await fetchIds(type);
+    currentPostIds = await fetchIds(type === 'jobs' ? 'jobstories' : type);
   }
-  currentPostIds.sort((a,b) => b - a);
+
+  currentPostIds.sort((a, b) => b - a);
   displayPosts();
 
   lastMaxItem = currentPostIds[0];
@@ -80,19 +87,28 @@ async function loadPosts(type) {
   liveCheckInterval = setInterval(checkForLiveUpdates, 5000);
 }
 
+// Display posts
 async function displayPosts() {
   const nextIds = currentPostIds.slice(currentIndex, currentIndex + postsPerPage);
   const items = await Promise.all(nextIds.map(id => fetchItem(id)));
 
   for (const item of items) {
-    if (!item) continue;
+    if (
+      !item ||
+      item.deleted ||
+      item.dead ||
+      (!item.title && !item.text && !item.url)
+    ) continue; // Skip invalid/empty posts
+
     const postEl = createPostElement(item);
     postsContainer.appendChild(postEl);
   }
+
   currentIndex += postsPerPage;
   loadMoreBtn.style.display = currentIndex >= currentPostIds.length ? 'none' : 'block';
 }
 
+// Post element
 function createPostElement(item) {
   const postElement = document.createElement('div');
   postElement.classList.add('post');
@@ -118,6 +134,7 @@ function createPostElement(item) {
   return postElement;
 }
 
+// Show full post + comments
 async function showPostWithComments(postId) {
   feedView.style.display = 'none';
   postView.style.display = 'block';
@@ -137,19 +154,23 @@ async function showPostWithComments(postId) {
     ${post.text ? `<div class="post-text">${post.text}</div>` : ''}
   `;
 
-  // Show poll options if available
+  // Poll options
   if (post.type === 'poll' && post.parts && post.parts.length) {
     const pollOptions = await Promise.all(post.parts.map(id => fetchItem(id)));
     const pollList = document.createElement('ul');
     pollList.classList.add('poll-options');
+
     pollOptions.forEach(opt => {
+      if (!opt || (!opt.text && !opt.score)) return;
       const li = document.createElement('li');
       li.textContent = `${opt.text || 'Option'} — ${opt.score || 0} votes`;
       pollList.appendChild(li);
     });
+
     postDetails.appendChild(pollList);
   }
 
+  // Comments
   postComments.innerHTML = '';
   if (post.kids && post.kids.length) {
     await loadComments(post.kids, postComments);
@@ -158,11 +179,12 @@ async function showPostWithComments(postId) {
   }
 }
 
+// Load nested comments
 async function loadComments(ids, container, level = 0) {
   const comments = await Promise.all(ids.map(id => fetchItem(id)));
   comments
     .filter(c => c && !c.deleted && !c.dead)
-    .sort((a,b) => b.time - a.time)
+    .sort((a, b) => b.time - a.time)
     .forEach(c => {
       const div = document.createElement('div');
       div.classList.add('comment');
@@ -173,6 +195,7 @@ async function loadComments(ids, container, level = 0) {
     });
 }
 
+// Fetch IDs list
 async function fetchIds(type) {
   try {
     const res = await fetch(`https://hacker-news.firebaseio.com/v0/${type}.json`);
@@ -182,6 +205,7 @@ async function fetchIds(type) {
   }
 }
 
+// Fetch single item
 async function fetchItem(id) {
   try {
     const res = await fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
@@ -191,6 +215,7 @@ async function fetchItem(id) {
   }
 }
 
+// Live update check
 async function checkForLiveUpdates() {
   if (!lastMaxItem) return;
   try {
@@ -199,6 +224,6 @@ async function checkForLiveUpdates() {
       liveBanner.classList.remove('hidden');
     }
   } catch {
-    // ignore errors
+    // ignore
   }
 }
