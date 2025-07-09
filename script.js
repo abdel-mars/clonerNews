@@ -222,6 +222,7 @@ async function checkForLiveUpdates() {
     const maxItem = await fetch(`https://hacker-news.firebaseio.com/v0/maxitem.json`).then(r => r.json());
     if (maxItem > lastMaxItem) {
       liveBanner.classList.remove('hidden');
+      lastMaxItem = maxItem;
     }
   } catch {
     // ignore

@@ -1,4 +1,3 @@
-/* Reset & Base */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -14,7 +13,6 @@ body {
   padding-bottom: 100px;
 }
 
-/* Header */
 header {
   padding: 1.5rem 2rem;
   background: rgba(255, 255, 255, 0.05);
@@ -54,7 +52,6 @@ h1 {
   color: #000;
 }
 
-/* Live Notification Banner */
 #live-banner {
   display: flex;
   align-items: center;
@@ -98,7 +95,6 @@ h1 {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Posts Grid */
 #posts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -204,7 +200,6 @@ h1 {
   color: #fff;
 }
 
-/* Back Button */
 #backBtn {
   background: transparent;
   border: 1px solid #00f7ff;
@@ -222,7 +217,6 @@ h1 {
   color: #000;
 }
 
-/* Load More Button */
 #loadMore {
   display: block;
   margin: 2rem auto;
@@ -241,7 +235,6 @@ h1 {
   color: #00f7ff;
 }
 
-/* Responsive */
 @media screen and (max-width: 768px) {
   body {
     padding: 1rem;
@@ -279,7 +272,6 @@ h1 {
     max-height: 400px;
   }
 }
-/* Add to styles.css */
 .post-text {
   background-color: #9e0909;
   padding: 10px;
